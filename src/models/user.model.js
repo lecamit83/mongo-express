@@ -39,6 +39,10 @@ userSchema.pre('save', function(done){
   });
 });
 
+userSchema.methods.verifyPassword = async function(password){
+ let isMatch = await bcrypt.compare(password, this.password);
+ return isMatch;
+}
 userSchema.methods.name = function() {
   return this.displayName || this.username;
 }

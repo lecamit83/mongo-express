@@ -7,7 +7,7 @@ const logger = require('morgan');
 require('./db/mongo.db');
 
 const apiRoute = require('./routes/api.route');
-
+const configPassport = require('./configs/configPassport');
 
 //Declare and Configure
 const app = express();
@@ -18,7 +18,7 @@ const configSession = {
   saveUninitialized: true,
   resave : true,
   cookie : {
-    maxAge: 60 * 60
+    maxAge: 24*1000,
   }
 }
 
@@ -30,6 +30,7 @@ app.use(session(configSession));
 app.use(passport.initialize());
 app.use(passport.session());
 app.use(logger('dev'));
+configPassport();
 
 //Routers
 app.use('/api', apiRoute);
